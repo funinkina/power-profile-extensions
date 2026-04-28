@@ -6,6 +6,7 @@ import Gtk from 'gi://Gtk';
 
 import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 import {
+    EXTENSION_STATE,
     SHELL_EXTENSIONS_BUS_NAME,
     SHELL_EXTENSIONS_INTERFACE,
     SHELL_EXTENSIONS_OBJECT_PATH,
@@ -258,15 +259,13 @@ class PowerExtensionManagerPage extends Adw.PreferencesPage {
 
     _normalizeExtensions(extensions) {
         return Object.entries(extensions)
-            .map(([uuid, info]) => {
-                const normalized = {uuid};
-
-                for (const [key, value] of Object.entries(info))
-                    normalized[key] = unpackVariant(value);
-
-                return normalized;
-            })
-            .filter(info => info.uuid !== this._selfUuid && info.state !== 99)
+            .map(([uuid, info]) => ({
+                uuid,
+                name: unpackVariant(info.name),
+                state: unpackVariant(info.state),
+            }))
+            .filter(info => info.uuid !== this._selfUuid &&
+                info.state !== EXTENSION_STATE.UNINSTALLED)
             .sort((a, b) => (a.name || a.uuid).localeCompare(b.name || b.uuid));
     }
 
