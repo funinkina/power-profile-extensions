@@ -1,5 +1,5 @@
-UUID = power-extension-manager@funinkina.co.in
-SCHEMA = schemas/org.gnome.shell.extensions.power-extension-manager.gschema.xml
+UUID = power-profile-extensions@funinkina.co.in
+SCHEMA = schemas/org.gnome.shell.extensions.power-profile-extensions.gschema.xml
 ZIP = $(UUID).shell-extension.zip
 
 .PHONY: schemas pack install enable disable prefs clean

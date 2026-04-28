@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.gnome.shell.extensions.power-extension-manager" path="/org/gnome/shell/extensions/power-extension-manager/">
+  <schema id="org.gnome.shell.extensions.power-profile-extensions" path="/org/gnome/shell/extensions/power-profile-extensions/">
     <key name="profile-rules" type="a{sas}">
       <default>{}</default>
       <summary>Extension enablement rules by power profile</summary>

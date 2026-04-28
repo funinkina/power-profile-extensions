@@ -27,7 +27,7 @@ function getProfileRules(settings) {
     try {
         return settings.get_value('profile-rules').deep_unpack();
     } catch (error) {
-        console.warn(`Power Extension Manager: Failed to read profile rules: ${error.message}`);
+        console.warn(`Power Profile Extensions: Failed to read profile rules: ${error.message}`);
         return {};
     }
 }
@@ -169,7 +169,7 @@ class PowerExtensionManagerPage extends Adw.PreferencesPage {
 
     constructor(settings, selfUuid) {
         super({
-            title: _('Power Extension Manager'),
+            title: _('Power Profile Extensions'),
             icon_name: 'preferences-system-symbolic',
         });
 
