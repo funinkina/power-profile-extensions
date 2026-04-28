@@ -1,8 +1,10 @@
+<img align="left" "src="icon.png"/>
+
 # Power Profile Extensions
 
 Power Profile Extensions is a GNOME Shell extension that enables or disables other extensions based on the active power profile.
 
-It watches `org.freedesktop.UPower.PowerProfiles.ActiveProfile` over D-Bus, so profile changes are handled as events instead of polling.
+It watches `org.freedesktop.UPower.PowerProfiles.ActiveProfile` over D-Bus, so profile changes are handled automatically.
 
 ## Build
 
