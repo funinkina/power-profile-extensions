@@ -220,10 +220,10 @@ export default class PowerExtensionManager extends Extension {
         const unpacked = {};
 
         for (const [uuid, info] of Object.entries(extensions)) {
-            unpacked[uuid] = {};
-
-            for (const [key, value] of Object.entries(info))
-                unpacked[uuid][key] = value instanceof GLib.Variant ? value.deep_unpack() : value;
+            const state = info.state;
+            unpacked[uuid] = {
+                state: state instanceof GLib.Variant ? state.deep_unpack() : state,
+            };
         }
 
         return unpacked;
