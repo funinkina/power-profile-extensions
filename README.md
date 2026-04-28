@@ -26,6 +26,9 @@ Coming Soon on Gnome Extension....
 
 ## Preferences UI
 
+<img width="650" alt="screenshot" src="https://github.com/user-attachments/assets/490ce606-a14f-42ab-95b4-633d841f1ef7" />
+
+
 ## Build
 
 ```sh
