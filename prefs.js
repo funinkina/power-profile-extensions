@@ -156,9 +156,7 @@ class ExtensionRuleRow extends Adw.ExpanderRow {
         else
             enabledProfiles.delete(profileId);
 
-        rules[this._uuid] = PROFILE_DEFINITIONS
-            .map(profile => profile.id)
-            .filter(profile => enabledProfiles.has(profile));
+        rules[this._uuid] = [...enabledProfiles];
 
         setProfileRules(this._settings, rules);
     }
