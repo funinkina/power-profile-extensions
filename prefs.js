@@ -5,10 +5,12 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
 import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
-
-const SHELL_EXTENSIONS_BUS_NAME = 'org.gnome.Shell.Extensions';
-const SHELL_EXTENSIONS_OBJECT_PATH = '/org/gnome/Shell/Extensions';
-const SHELL_EXTENSIONS_INTERFACE = 'org.gnome.Shell.Extensions';
+import {
+    SHELL_EXTENSIONS_BUS_NAME,
+    SHELL_EXTENSIONS_INTERFACE,
+    SHELL_EXTENSIONS_OBJECT_PATH,
+    isCancelled,
+} from './utils.js';
 
 const PROFILE_DEFINITIONS = [
     {id: 'power-saver', get title() { return _('Power Saver'); }},
@@ -226,7 +228,7 @@ class PowerExtensionManagerPage extends Adw.PreferencesPage {
                     this._shellProxy = Gio.DBusProxy.new_for_bus_finish(result);
                     this._loadExtensions();
                 } catch (error) {
-                    if (!this._isCancelled(error))
+                    if (!isCancelled(error))
                         this._setStatus(_('Could not connect to GNOME Shell Extensions.'));
                 }
             });
@@ -248,7 +250,7 @@ class PowerExtensionManagerPage extends Adw.PreferencesPage {
                     const [extensions] = proxy.call_finish(result).deep_unpack();
                     this._showExtensions(this._normalizeExtensions(extensions));
                 } catch (error) {
-                    if (!this._isCancelled(error))
+                    if (!isCancelled(error))
                         this._setStatus(_('Could not load installed extensions.'));
                 }
             });
@@ -316,9 +318,6 @@ class PowerExtensionManagerPage extends Adw.PreferencesPage {
             row.visible = query.length === 0 || row.matches(query);
     }
 
-    _isCancelled(error) {
-        return error.matches?.(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED);
-    }
 }
 
 export default class PowerExtensionManagerPreferences extends ExtensionPreferences {

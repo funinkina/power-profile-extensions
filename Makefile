@@ -8,7 +8,7 @@ schemas:
 	glib-compile-schemas schemas
 
 pack: schemas
-	gnome-extensions pack -f --schema=$(SCHEMA) .
+	gnome-extensions pack -f --schema=$(SCHEMA) --extra-source=utils.js .
 
 install: pack
 	gnome-extensions install --force $(ZIP)

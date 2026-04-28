@@ -2,23 +2,19 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
+import {
+    EXTENSION_STATE,
+    SHELL_EXTENSIONS_BUS_NAME,
+    SHELL_EXTENSIONS_INTERFACE,
+    SHELL_EXTENSIONS_OBJECT_PATH,
+    isCancelled,
+} from './utils.js';
 
 const POWER_BUS_NAME = 'org.freedesktop.UPower.PowerProfiles';
 const POWER_OBJECT_PATH = '/org/freedesktop/UPower/PowerProfiles';
 const POWER_INTERFACE = 'org.freedesktop.UPower.PowerProfiles';
 
-const SHELL_EXTENSIONS_BUS_NAME = 'org.gnome.Shell.Extensions';
-const SHELL_EXTENSIONS_OBJECT_PATH = '/org/gnome/Shell/Extensions';
-const SHELL_EXTENSIONS_INTERFACE = 'org.gnome.Shell.Extensions';
-
 const PROFILE_IDS = new Set(['power-saver', 'balanced', 'performance']);
-
-const EXTENSION_STATE = {
-    ERROR: 3,
-    OUT_OF_DATE: 4,
-    DOWNLOADING: 5,
-    UNINSTALLED: 99,
-};
 
 export default class PowerExtensionManager extends Extension {
     enable() {
@@ -81,7 +77,7 @@ export default class PowerExtensionManager extends Extension {
                     this._shellProxy = Gio.DBusProxy.new_for_bus_finish(result);
                     this._applyForCurrentProfile('extensions proxy ready');
                 } catch (error) {
-                    if (!this._isCancelled(error))
+                    if (!isCancelled(error))
                         console.warn(`${this.metadata.name}: Failed to connect to GNOME Shell Extensions D-Bus: ${error.message}`);
                 }
             });
@@ -124,7 +120,7 @@ export default class PowerExtensionManager extends Extension {
                         });
                     this._readCachedActiveProfile();
                 } catch (error) {
-                    if (!this._isCancelled(error))
+                    if (!isCancelled(error))
                         console.warn(`${this.metadata.name}: Failed to connect to power-profiles-daemon: ${error.message}`);
                 }
             });
@@ -214,7 +210,7 @@ export default class PowerExtensionManager extends Extension {
                     const [extensions] = proxy.call_finish(result).deep_unpack();
                     callback(this._unpackExtensionMap(extensions));
                 } catch (error) {
-                    if (!this._isCancelled(error))
+                    if (!isCancelled(error))
                         console.warn(`${this.metadata.name}: Failed to list GNOME Shell extensions: ${error.message}`);
                 }
             });
@@ -269,13 +265,9 @@ export default class PowerExtensionManager extends Extension {
                     if (!success)
                         console.warn(`${this.metadata.name}: ${method} returned false for ${uuid} (${reason})`);
                 } catch (error) {
-                    if (!this._isCancelled(error))
+                    if (!isCancelled(error))
                         console.warn(`${this.metadata.name}: Failed to ${enabled ? 'enable' : 'disable'} ${uuid}: ${error.message}`);
                 }
             });
-    }
-
-    _isCancelled(error) {
-        return error.matches?.(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED);
     }
 }
