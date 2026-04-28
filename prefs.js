@@ -24,7 +24,12 @@ function unpackVariant(value) {
 }
 
 function getProfileRules(settings) {
-    return settings.get_value('profile-rules').deep_unpack();
+    try {
+        return settings.get_value('profile-rules').deep_unpack();
+    } catch (error) {
+        console.warn(`Power Extension Manager: Failed to read profile rules: ${error.message}`);
+        return {};
+    }
 }
 
 function setProfileRules(settings, rules) {
