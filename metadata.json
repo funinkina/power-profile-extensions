@@ -2,6 +2,11 @@
   "uuid": "power-profile-extensions@funinkina.co.in",
   "name": "Power Profile Extensions",
   "url": "https://github.com/funinkina/power-profile-extensions",
+  "donation": {
+    "buymeacoffee": "https://www.buymeacoffee.com/funinkina",
+    "github": "https://github.com/sponsors/funinkina"
+  },
+  "license": "MIT",
   "description": "Enable or disable GNOME Shell extensions based on the active power profile.",
   "shell-version": [
     "45",
