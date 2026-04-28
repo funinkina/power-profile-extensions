@@ -1,0 +1,15 @@
+{
+  "uuid": "power-extension-manager@funinkina.co.in",
+  "name": "Power Extension Manager",
+  "description": "Enable or disable GNOME Shell extensions based on the active power profile.",
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50"
+  ],
+  "settings-schema": "org.gnome.shell.extensions.power-extension-manager",
+  "version": 1
+}
