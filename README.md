@@ -38,6 +38,8 @@ make pack
 ## Install locally
 
 ```sh
+git clone https://github.com/funinkina/power-profile-extensions.git
+cd power-profile-extensions
 make install
 gnome-extensions enable power-profile-extensions@funinkina.co.in
 gnome-extensions prefs power-profile-extensions@funinkina.co.in
